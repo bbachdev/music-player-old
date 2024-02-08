@@ -6,7 +6,7 @@ import AlbumList from '../components/AlbumList';
 export default function MusicScreen() {
   return (
     <>
-      <PanelGroup autoSaveId="music" direction="horizontal">
+      <PanelGroup autoSaveId="musicPanels" direction="horizontal">
         <Panel defaultSize={30} minSize={20}>
           <ArtistList/>
         </Panel>

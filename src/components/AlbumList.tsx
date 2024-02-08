@@ -6,11 +6,11 @@ export default function AlbumList() {
   }
 
   return (
-    <>
-      <h2>Albums</h2>
-      <ul>
+    <div className={`w-full flex flex-col items-center`}>
+      <h2 className={`self-start`}>Albums</h2>
+      <ul className={`flex flex-wrap gap-4 items-center`}>
         {albums.map((album) => {
-          return <li key={album}>
+          return <li key={album} className={`w-fit`}>
             <img src="https://via.placeholder.com/120" alt="album cover" />
             <div className={`flex flex-col`}>
               <p>{album}</p>
@@ -19,6 +19,6 @@ export default function AlbumList() {
           </li>
         })}
       </ul>
-    </>
+    </div>
   )
 }
