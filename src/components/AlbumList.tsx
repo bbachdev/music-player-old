@@ -8,17 +8,17 @@ export default function AlbumList() {
   return (
     <div className={`w-full flex flex-col items-center`}>
       <h2 className={`self-start`}>Albums</h2>
-      <ul className={`flex flex-wrap gap-4 items-center`}>
+      <div className={`albumGrid w-full px-2`}>
         {albums.map((album) => {
-          return <li key={album} className={`w-fit`}>
+          return <div key={album} className={`w-fit`}>
             <img src="https://via.placeholder.com/120" alt="album cover" />
             <div className={`flex flex-col`}>
               <p>{album}</p>
               <p>Artist Name</p>
             </div>
-          </li>
+          </div>
         })}
-      </ul>
+      </div>
     </div>
   )
 }
