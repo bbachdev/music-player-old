@@ -13,6 +13,13 @@ interface ThemeSelectionProps {
 
 export default function ThemeSelection({setStep, setConfig}: ThemeSelectionProps) {
   const {setTheme} = useTheme()
+  //TODO: Move this list to other file
+  const accentColors = [
+    "bg-sky-500",
+    "bg-rose-500",
+    "bg-amber-500",
+    "bg-emerald-500"
+  ]
 
   function saveTheme() {
     setStep(2)
@@ -46,8 +53,15 @@ export default function ThemeSelection({setStep, setConfig}: ThemeSelectionProps
               <FaMoon/>
               <span>Dark</span>
             </div>
-            
           </button>
+        </div>
+        <p className={`mt-8`}>Choose an accent color:</p>
+        <div className={`mt-4 flex flex-row gap-2`}>
+          {accentColors.map(color => (
+            <button key={color} className={`${color} text-white px-4 py-2 rounded-full h-10 w-10`}>
+              
+            </button>
+          ))}
         </div>
         <Button className={`mt-8 text-md bg-sky-500 hover:bg-sky-500/90`} onClick={() => saveTheme()}>Next</Button>
         <button className={`mt-2`} onClick={() => setStep(0)}>
