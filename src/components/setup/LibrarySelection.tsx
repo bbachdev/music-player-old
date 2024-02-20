@@ -4,12 +4,14 @@ import { FaPlus } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
 import { homeDir } from '@tauri-apps/api/path';
 import { Button } from '../ui/button';
+import { Config } from '@/util/config';
 
 interface LibrarySelectionProps {
   setStep: Dispatch<SetStateAction<number>>
+  setConfig: Dispatch<SetStateAction<Config>>
 }
 
-export default function LibrarySelection({setStep}: LibrarySelectionProps) {
+export default function LibrarySelection({setStep, setConfig}: LibrarySelectionProps) {
   const [folders, setFolders] = useState<Set<string>>(new Set())
 
   async function addFolder() {

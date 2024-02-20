@@ -4,12 +4,14 @@ import { Button } from '../ui/button';
 import { MdOutlineWbSunny } from "react-icons/md";
 import { FaMoon } from "react-icons/fa6";
 import { useTheme } from '../providers/ThemeProvider';
+import { Config } from '@/util/config';
 
 interface ThemeSelectionProps {
   setStep: Dispatch<SetStateAction<number>>
+  setConfig: Dispatch<SetStateAction<Config>>
 }
 
-export default function ThemeSelection({setStep}: ThemeSelectionProps) {
+export default function ThemeSelection({setStep, setConfig}: ThemeSelectionProps) {
   const {setTheme} = useTheme()
 
   function saveTheme() {
@@ -18,6 +20,7 @@ export default function ThemeSelection({setStep}: ThemeSelectionProps) {
 
   function toggleTheme(choice: "light" | "dark") {
     setTheme(choice)
+    setConfig((prev) => ({...prev, theme: choice}))
   }
 
   function selectAccentColor() {

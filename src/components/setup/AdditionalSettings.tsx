@@ -1,11 +1,13 @@
 import { Dispatch, SetStateAction } from 'react';
 import { Button } from '../ui/button';
+import { Config } from '@/util/config';
 
 interface AdditionalSettingsProps {
   setStep: Dispatch<SetStateAction<number>>
+  setConfig: Dispatch<SetStateAction<Config>>
 }
 
-export default function AdditionalSettings({setStep}: AdditionalSettingsProps) {
+export default function AdditionalSettings({setStep, setConfig}: AdditionalSettingsProps) {
   return (
     <div className={`my-auto flex flex-col justify-center items-center h-full`}>
       <div className={`flex flex-col items-center mb-4`}>

@@ -4,7 +4,7 @@ const CONFIG_FILE_NAME = 'config.json';
 
 export type Config = {
   libraryPaths: string[];
-  theme: "light" | "dark";
+  theme: "light" | "dark" | "system";
   accentColor: string; //TODO Potentially restrict to a list of colors
   discordRichPresenceEnabled: boolean;
   lyricDownloadsEnabled: boolean;
