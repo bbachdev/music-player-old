@@ -11,8 +11,9 @@ fn greet(name: &str) -> String {
 }
 
 #[tauri::command]
-fn scan() -> String {
-    library::scan().to_string()
+fn scan(paths: Vec<&str>) -> String {
+  println!("Scanning paths: {:?}", paths);
+  paths[0].to_string()
 }
 
 fn main() {
