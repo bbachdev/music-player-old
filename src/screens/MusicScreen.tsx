@@ -2,8 +2,13 @@ import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 import ArtistList from '../components/ArtistList';
 import SongList from '../components/SongList';
 import AlbumList from '../components/AlbumList';
+import { Config } from '@/util/config';
 
-export default function MusicScreen() {
+interface MusicScreenProps {
+    config: Config
+}
+
+export default function MusicScreen({config}: MusicScreenProps) {
   return (
     <>
       <PanelGroup autoSaveId="musicPanels" direction="horizontal">

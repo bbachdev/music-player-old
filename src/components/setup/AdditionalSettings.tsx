@@ -1,23 +1,53 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { Button } from '../ui/button';
 import { Config } from '@/util/config';
 import { Switch } from '../ui/switch';
 import { Label } from '../ui/label';
+import { appLocalDataDir } from '@tauri-apps/api/path';
+import Spinner from '../ui/spinner';
+import { BaseDirectory, createDir, exists, writeTextFile } from '@tauri-apps/api/fs';
 
 interface AdditionalSettingsProps {
   setStep: Dispatch<SetStateAction<number>>
   config: Config,
-  setConfig: Dispatch<SetStateAction<Config>>
+  setConfig: Dispatch<SetStateAction<Config>>,
+  onFinish: () => void
 }
 
-export default function AdditionalSettings({setStep, config, setConfig}: AdditionalSettingsProps) {
+export default function AdditionalSettings({setStep, config, setConfig, onFinish}: AdditionalSettingsProps) {
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [discordRichPresenceEnabled, setDiscordRichPresenceEnabled] = useState<boolean>(config.discordRichPresenceEnabled)
+  const [lyricDownloadsEnabled, setLyricDownloadsEnabled] = useState<boolean>(config.lyricDownloadsEnabled)
 
   function toggleDiscordRichPresence() {
-    setConfig((prev) => ({...prev, discordRichPresenceEnabled: !prev.discordRichPresenceEnabled}))
+    setDiscordRichPresenceEnabled((prev) => !prev)
   }
 
   function toggleLyricDownloads() {
-    setConfig((prev) => ({...prev, lyricDownloadsEnabled: !prev.lyricDownloadsEnabled}))
+    setLyricDownloadsEnabled((prev) => !prev)
+  }
+
+  async function finish() {
+    // setConfig((prev) => ({...prev, discordRichPresenceEnabled, lyricDownloadsEnabled}))
+    setIsLoading(true)
+    //et dataDir = await appLocalDataDir()
+
+    let configToSave = {
+      ...config,
+      discordRichPresenceEnabled,
+      lyricDownloadsEnabled
+    }
+
+    setConfig(configToSave)
+
+    //If app data directory doesn't exist, create it
+    if(!await exists(``,{dir: BaseDirectory.AppLocalData})) {
+      await createDir(``, {dir: BaseDirectory.AppLocalData})
+    }
+
+    await writeTextFile(`config.json`, JSON.stringify(configToSave), { dir: BaseDirectory.AppLocalData });
+    setIsLoading(false)
+    onFinish()
   }
 
   return (
@@ -28,15 +58,18 @@ export default function AdditionalSettings({setStep, config, setConfig}: Additio
       </div>
       <div className={`mt-2 flex flex-col gap-4`}>
         <div className="flex items-center space-x-2">
-          <Switch className={`bg-black`} id="discord" />
+          <Switch id="discord" checked={discordRichPresenceEnabled} onCheckedChange={toggleDiscordRichPresence}/>
           <Label htmlFor="discord">Enable Discord Rich Presence</Label>
         </div>
         <div className="flex items-center space-x-2">
-          <Switch id="lyrics" />
+          <Switch id="lyrics" checked={lyricDownloadsEnabled} onCheckedChange={toggleLyricDownloads}/>
           <Label htmlFor="lyrics">Allow Lyric Downloads for Library</Label>
         </div>
       </div>
-      <Button className={`mt-8 text-md bg-sky-500 hover:bg-sky-500/90`} onClick={() => setStep(2)} size={`lg`}>Finish</Button>
+      <Button className={`mt-8 text-md bg-sky-500 hover:bg-sky-500/90`} onClick={finish} size={`lg`}>
+        {isLoading && <Spinner size={20} color={"black"} />}
+        {!isLoading && `Finish`}
+      </Button>
       <button className={`mt-2`} onClick={() => setStep(2)}>
         <span className={`underline text-sm`}>{`< Back`}</span>
       </button>

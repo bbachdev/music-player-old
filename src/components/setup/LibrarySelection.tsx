@@ -13,6 +13,7 @@ interface LibrarySelectionProps {
 }
 
 export default function LibrarySelection({setStep, config, setConfig}: LibrarySelectionProps) {
+  {/* TODO: Look into using array instead for performance reasons */}
   const [folders, setFolders] = useState<Set<string>>(new Set(config.libraryPaths))
 
   async function addFolder() {

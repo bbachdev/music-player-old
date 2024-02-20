@@ -16,8 +16,9 @@ fn scan() -> String {
 }
 
 fn main() {
-    tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet, scan])
-        .run(tauri::generate_context!())
-        .expect("error while running tauri application");
+  let _ = fix_path_env::fix();
+  tauri::Builder::default()
+      .invoke_handler(tauri::generate_handler![greet, scan])
+      .run(tauri::generate_context!())
+      .expect("error while running tauri application");
 }
