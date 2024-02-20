@@ -3,6 +3,7 @@ import ArtistList from '../components/ArtistList';
 import SongList from '../components/SongList';
 import AlbumList from '../components/AlbumList';
 import { Config } from '@/util/config';
+import Header from '@/components/layout/Header';
 
 interface MusicScreenProps {
     config: Config
@@ -11,6 +12,7 @@ interface MusicScreenProps {
 export default function MusicScreen({config}: MusicScreenProps) {
   return (
     <>
+      <Header/>
       <PanelGroup autoSaveId="musicPanels" direction="horizontal">
         <Panel defaultSize={30} minSize={20}>
           <ArtistList/>
