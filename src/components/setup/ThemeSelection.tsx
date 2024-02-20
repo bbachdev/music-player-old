@@ -71,7 +71,7 @@ export default function ThemeSelection({setStep, setConfig}: ThemeSelectionProps
             </button>
           ))}
         </div>
-        <Button className={`mt-8 text-md ${selectedAccentColor} hover:bg-sky-500/90`} onClick={() => saveTheme()} variant={`custom`}>Next</Button>
+        <Button className={`mt-8 text-md ${selectedAccentColor} hover:bg-sky-500/90`} onClick={() => saveTheme()} variant={`custom`} size={`lg`}>Next</Button>
         {/* <button className={`mt-8 text-md ${selectedAccentColor} hover:${selectedAccentColor}/90`} onClick={() => saveTheme()}>Next</button> */}
         <button className={`mt-2`} onClick={() => setStep(0)}>
           <span className={`underline text-sm`}>{`< Back`}</span>

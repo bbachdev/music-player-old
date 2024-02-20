@@ -40,12 +40,13 @@ export default function LibrarySelection({setStep, setConfig}: LibrarySelectionP
     <div className={`my-auto flex flex-col justify-center items-center h-full`}>
       <div className={`flex flex-col items-center mb-4`}>
         <h1 className={`font-semibold text-3xl`}>Select your music library</h1>
-        <p className={`mt-2 text-slate-700 dark:text-slate-300`}>{`Choose the folder(s) where your music is located.`}</p>
+        <p className={`mt-2 text-slate-700 dark:text-slate-300`}>{`Choose the folder(s) where your music is located:`}</p>
       </div>
       {/* Folder List */}
+      {folders.size === 0 && <p className={`text-slate-700 dark:text-slate-300 my-4`}>No folders selected</p>}
         <ul className={`mb-2 w-1/5`}>
           {[...folders].map(folder => (
-            <li key={folder} className={`bg-slate-100 p-2 w-full flex flex-row items-center`}>
+            <li key={folder} className={`even:bg-slate-200 odd:bg-slate-300 dark:even:bg-slate-600 dark:odd:bg-slate-700 p-2 w-full flex flex-row items-center`}>
               <>
                 <button className={`mr-4`} onClick={() => removeFolder(folder)}><ImCross className={`text-lg text-red-500/90`} /></button>
                 <span>{folder}</span>
@@ -53,7 +54,7 @@ export default function LibrarySelection({setStep, setConfig}: LibrarySelectionP
             </li>
           ))}
         </ul>
-      <button onClick={addFolder}>
+      <button onClick={addFolder} className={`mt-4`}>
         <FaPlus className={`inline-block mr-2`}/><span className={`underline`}>Add Folder</span>
       </button>
       <Button className={`mt-8 text-md bg-sky-500 hover:bg-sky-500/90`} onClick={() => setStep(3)} size={`lg`}>Next</Button>
