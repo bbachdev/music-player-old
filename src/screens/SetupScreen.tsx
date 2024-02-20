@@ -1,7 +1,16 @@
+import { useState } from 'react';
+import Welcome from '../components/setup/Welcome';
+import LibrarySelection from '@/components/setup/LibrarySelection';
+import ThemeSelection from '@/components/setup/ThemeSelection';
+
 export default function SetupScreen() {
+  const [step, setStep] = useState<number>(0);
+
   return (
-    <>
-      <h1>Setup</h1>
-    </>
+    <div className={`flex flex-col min-h-[100vh]`}>
+      {step === 0 && <Welcome setStep={setStep}/>}
+      {step === 1 && <ThemeSelection setStep={setStep}/>}
+      {step === 2 && <LibrarySelection setStep={setStep}/>}
+    </div>
   )
 }

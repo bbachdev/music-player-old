@@ -12,6 +12,21 @@
   "tauri": {
     "allowlist": {
       "all": false,
+      "dialog": {
+        "open": true
+      },
+      "fs": {
+        "all": true,
+        "scope": ["$LOCALDATA/**"]
+      },
+      "path": {
+        "all": true
+      },
+      "protocol": {
+        "all": true,
+        "asset": true,
+        "assetScope": ["**"]
+      },
       "shell": {
         "all": false,
         "open": true

@@ -1,21 +1,51 @@
-import { useState } from "react";
-import { invoke } from "@tauri-apps/api/tauri";
 import "./App.css";
+import { useEffect, useState } from "react";
 import MusicScreen from './screens/MusicScreen';
+import { getConfigFile } from './util/config';
+import SetupScreen from './screens/SetupScreen';
+import { ThemeProvider } from './components/providers/ThemeProvider';
 
 function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [currentScreen, setCurrentScreen] = useState<string>("");
+  
+  useEffect(() => {
+    const getConfig = async () => {
+      setIsLoading(true);
+      try {
+        const config = await getConfigFile();
+        console.log("Config:", config)
+        if(config) {
+          //TODO: Save to Context and load Music screen
+        }else{
+          //Go to Setup screen
+          setCurrentScreen("setup");
+        }
+        //TODO: Save to Context
+      } catch (error) {
+        console.error('Error fetching config:', error);
+      } finally {
+        
+        setIsLoading(false);
+      }
+    };
 
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    setGreetMsg(await invoke("greet", { name }));
-  }
+    getConfig();
+  }, []); 
 
   return (
-    <div>
-      <MusicScreen />
-    </div>
+    <ThemeProvider defaultTheme="system" storageKey="musicAppTheme">
+      <div className={`dark:bg-slate-800 dark:text-white`}>
+        {!isLoading && currentScreen && 
+          (currentScreen === "music" ? <MusicScreen /> : <SetupScreen/>)
+        }
+        {isLoading && 
+          (<div>
+            Loading...
+          </div>
+        )}
+      </div>
+    </ThemeProvider>
   );
 }
 
