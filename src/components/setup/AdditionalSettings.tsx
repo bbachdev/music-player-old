@@ -6,10 +6,11 @@ import { Label } from '../ui/label';
 
 interface AdditionalSettingsProps {
   setStep: Dispatch<SetStateAction<number>>
+  config: Config,
   setConfig: Dispatch<SetStateAction<Config>>
 }
 
-export default function AdditionalSettings({setStep, setConfig}: AdditionalSettingsProps) {
+export default function AdditionalSettings({setStep, config, setConfig}: AdditionalSettingsProps) {
 
   function toggleDiscordRichPresence() {
     setConfig((prev) => ({...prev, discordRichPresenceEnabled: !prev.discordRichPresenceEnabled}))

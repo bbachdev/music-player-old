@@ -8,10 +8,11 @@ import { Config } from '@/util/config';
 
 interface LibrarySelectionProps {
   setStep: Dispatch<SetStateAction<number>>
+  config: Config,
   setConfig: Dispatch<SetStateAction<Config>>
 }
 
-export default function LibrarySelection({setStep, setConfig}: LibrarySelectionProps) {
+export default function LibrarySelection({setStep, config, setConfig}: LibrarySelectionProps) {
   const [folders, setFolders] = useState<Set<string>>(new Set())
 
   async function addFolder() {
@@ -57,7 +58,7 @@ export default function LibrarySelection({setStep, setConfig}: LibrarySelectionP
       <button onClick={addFolder} className={`mt-4`}>
         <FaPlus className={`inline-block mr-2`}/><span className={`underline`}>Add Folder</span>
       </button>
-      <Button className={`mt-8 text-md bg-sky-500 hover:bg-sky-500/90`} onClick={() => setStep(3)} size={`lg`}>Next</Button>
+      <Button className={`mt-8 text-md`} onClick={() => setStep(3)} size={`lg`}>Next</Button>
       <button className={`mt-2`} onClick={() => setStep(1)}>
         <span className={`underline text-sm`}>{`< Back`}</span>
       </button>

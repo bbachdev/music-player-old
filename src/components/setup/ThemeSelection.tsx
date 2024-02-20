@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Button } from '../ui/button';
 
 import { MdOutlineWbSunny } from "react-icons/md";
@@ -9,10 +9,11 @@ import { FaCheck } from 'react-icons/fa';
 
 interface ThemeSelectionProps {
   setStep: Dispatch<SetStateAction<number>>
+  config: Config,
   setConfig: Dispatch<SetStateAction<Config>>
 }
 
-export default function ThemeSelection({setStep, setConfig}: ThemeSelectionProps) {
+export default function ThemeSelection({setStep, config, setConfig}: ThemeSelectionProps) {
   const {setTheme} = useTheme()
   //TODO: Move this list to other file
   const accentColors = [
@@ -23,7 +24,7 @@ export default function ThemeSelection({setStep, setConfig}: ThemeSelectionProps
     "bg-violet-500",
     "bg-slate-500",
   ]
-  const [selectedAccentColor, setAccentColor] = useState<string>(accentColors[0])
+  const [selectedAccentColor, setAccentColor] = useState<string>(config.accentColor)
 
   function saveTheme() {
     setStep(2)
@@ -47,17 +48,29 @@ export default function ThemeSelection({setStep, setConfig}: ThemeSelectionProps
           <p className={`mt-2 text-slate-700 dark:text-slate-300`}>{`Choose the theme you'd like to use for the app.`}</p>
         </div>
         <div className={`flex flex-row items-center w-fit space-x-8`}>
-          <button className={`bg-slate-100 hover:bg-slate-100/90 border-[1px] border-solid border-slate-300 text-black px-4 py-2 rounded-md mr-4 h-24 w-24`} onClick={() => toggleTheme('light')}>
-            <div className={`flex flex-col items-center justify-center`}>
+          <button className={`bg-slate-100 hover:bg-slate-100/90 border-[1px] border-solid border-slate-300 text-black rounded-md mr-4 h-24 w-24`} onClick={() => toggleTheme('light')}>
+            {config.theme === "light" && <div className={`w-24 h-24 border-2 rounded-md border-slate-700 flex items-center justify-center`}>
+              <div className={`flex flex-col items-center justify-center`}>
+                <MdOutlineWbSunny/>
+                <span>Light</span>
+              </div>
+            </div>}
+            {config.theme === "dark" && <div className={`flex flex-col items-center justify-center`}>
               <MdOutlineWbSunny/>
               <span>Light</span>
-            </div>
+            </div>}
           </button>
-          <button className={`bg-slate-700 hover:bg-slate-700/90 text-white px-4 py-2 rounded-md h-24 w-24`} onClick={() => toggleTheme('dark')}>
-            <div className={`flex flex-col items-center justify-center`}>
+          <button className={`bg-slate-700 hover:bg-slate-700/90 text-white rounded-md h-24 w-24`} onClick={() => toggleTheme('dark')}>
+            {config.theme === "dark" && <div className={`w-24 h-24 border-2 rounded-md border-white flex items-center justify-center`}>
+              <div className={`flex flex-col items-center justify-center`}>
+                <FaMoon/>
+                <span>Dark</span>
+              </div>
+            </div>}
+            {config.theme === "light" && <div className={`flex flex-col items-center justify-center`}>
               <FaMoon/>
               <span>Dark</span>
-            </div>
+            </div>}
           </button>
         </div>
         <p className={`mt-8`}>Choose an accent color:</p>
@@ -71,7 +84,7 @@ export default function ThemeSelection({setStep, setConfig}: ThemeSelectionProps
             </button>
           ))}
         </div>
-        <Button className={`mt-8 text-md ${selectedAccentColor} hover:bg-sky-500/90`} onClick={() => saveTheme()} variant={`custom`} size={`lg`}>Next</Button>
+        <Button className={`mt-8 text-md`} onClick={() => saveTheme()} size={`lg`}>Next</Button>
         {/* <button className={`mt-8 text-md ${selectedAccentColor} hover:${selectedAccentColor}/90`} onClick={() => saveTheme()}>Next</button> */}
         <button className={`mt-2`} onClick={() => setStep(0)}>
           <span className={`underline text-sm`}>{`< Back`}</span>
