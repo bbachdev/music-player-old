@@ -38,7 +38,7 @@ export default function LibrarySelection({setStep}: LibrarySelectionProps) {
     <div className={`my-auto flex flex-col justify-center items-center h-full`}>
       <div className={`flex flex-col items-center mb-4`}>
         <h1 className={`font-semibold text-3xl`}>Select your music library</h1>
-        <p className={`mt-2 text-slate-700`}>{`Choose the folder(s) where your music is located.`}</p>
+        <p className={`mt-2 text-slate-700 dark:text-slate-300`}>{`Choose the folder(s) where your music is located.`}</p>
       </div>
       {/* Folder List */}
         <ul className={`mb-2 w-1/5`}>
@@ -54,8 +54,8 @@ export default function LibrarySelection({setStep}: LibrarySelectionProps) {
       <button onClick={addFolder}>
         <FaPlus className={`inline-block mr-2`}/><span className={`underline`}>Add Folder</span>
       </button>
-      <Button className={`mt-8 text-md bg-sky-500 hover:bg-sky-500/90`} onClick={() => setStep(1)} size={`lg`}>Next</Button>
-      <button className={`mt-2`} onClick={() => setStep(0)}>
+      <Button className={`mt-8 text-md bg-sky-500 hover:bg-sky-500/90`} onClick={() => setStep(3)} size={`lg`}>Next</Button>
+      <button className={`mt-2`} onClick={() => setStep(1)}>
         <span className={`underline text-sm`}>{`< Back`}</span>
       </button>
     </div>
