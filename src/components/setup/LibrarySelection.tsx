@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { open } from '@tauri-apps/api/dialog';
 import { FaPlus } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
@@ -13,7 +13,7 @@ interface LibrarySelectionProps {
 }
 
 export default function LibrarySelection({setStep, config, setConfig}: LibrarySelectionProps) {
-  const [folders, setFolders] = useState<Set<string>>(new Set())
+  const [folders, setFolders] = useState<Set<string>>(new Set(config.libraryPaths))
 
   async function addFolder() {
     const selectedFolders = await open({
@@ -37,6 +37,11 @@ export default function LibrarySelection({setStep, config, setConfig}: LibrarySe
     setFolders(new Set(folders))
   }
 
+  function nextStep() {
+    setConfig((prev) => ({...prev, libraryPaths: [...folders]}))
+    setStep(3)
+  }
+
   return (
     <div className={`my-auto flex flex-col justify-center items-center h-full`}>
       <div className={`flex flex-col items-center mb-4`}>
@@ -58,7 +63,7 @@ export default function LibrarySelection({setStep, config, setConfig}: LibrarySe
       <button onClick={addFolder} className={`mt-4`}>
         <FaPlus className={`inline-block mr-2`}/><span className={`underline`}>Add Folder</span>
       </button>
-      <Button className={`mt-8 text-md`} onClick={() => setStep(3)} size={`lg`}>Next</Button>
+      <Button className={`mt-8 text-md`} onClick={nextStep} size={`lg`} disabled={folders.size === 0}>Next</Button>
       <button className={`mt-2`} onClick={() => setStep(1)}>
         <span className={`underline text-sm`}>{`< Back`}</span>
       </button>
