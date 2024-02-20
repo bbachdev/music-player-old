@@ -1,10 +1,11 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { Button } from '../ui/button';
 
 import { MdOutlineWbSunny } from "react-icons/md";
 import { FaMoon } from "react-icons/fa6";
 import { useTheme } from '../providers/ThemeProvider';
 import { Config } from '@/util/config';
+import { FaCheck } from 'react-icons/fa';
 
 interface ThemeSelectionProps {
   setStep: Dispatch<SetStateAction<number>>
@@ -18,8 +19,11 @@ export default function ThemeSelection({setStep, setConfig}: ThemeSelectionProps
     "bg-sky-500",
     "bg-rose-500",
     "bg-amber-500",
-    "bg-emerald-500"
+    "bg-emerald-500",
+    "bg-violet-500",
+    "bg-slate-500",
   ]
+  const [selectedAccentColor, setAccentColor] = useState<string>(accentColors[0])
 
   function saveTheme() {
     setStep(2)
@@ -30,8 +34,9 @@ export default function ThemeSelection({setStep, setConfig}: ThemeSelectionProps
     setConfig((prev) => ({...prev, theme: choice}))
   }
 
-  function selectAccentColor() {
-
+  function selectAccentColor(color: string) {
+    setAccentColor(color)
+    setConfig((prev) => ({...prev, accentColor: color}))
   }
 
   return (
@@ -58,12 +63,16 @@ export default function ThemeSelection({setStep, setConfig}: ThemeSelectionProps
         <p className={`mt-8`}>Choose an accent color:</p>
         <div className={`mt-4 flex flex-row gap-2`}>
           {accentColors.map(color => (
-            <button key={color} className={`${color} text-white px-4 py-2 rounded-full h-10 w-10`}>
-              
+            <button key={color} className={`${color} text-white rounded-full h-10 w-10 flex flex-col`} onClick={() => selectAccentColor(color)}>
+              {selectedAccentColor === color && <div className={`w-10 h-10 rounded-full border-2 border-white flex items-center justify-center`}>
+              {/* Add Checkmark */}
+              <FaCheck className={`w-4 h-4 rounded-full text-white`} />
+            </div>}
             </button>
           ))}
         </div>
-        <Button className={`mt-8 text-md bg-sky-500 hover:bg-sky-500/90`} onClick={() => saveTheme()}>Next</Button>
+        <Button className={`mt-8 text-md ${selectedAccentColor} hover:bg-sky-500/90`} onClick={() => saveTheme()} variant={`custom`}>Next</Button>
+        {/* <button className={`mt-8 text-md ${selectedAccentColor} hover:${selectedAccentColor}/90`} onClick={() => saveTheme()}>Next</button> */}
         <button className={`mt-2`} onClick={() => setStep(0)}>
           <span className={`underline text-sm`}>{`< Back`}</span>
         </button>
