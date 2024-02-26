@@ -13,7 +13,10 @@ export type Config = {
 }
 
 export type SubsonicEntity = {
-
+  id: string;
+  url: string;
+  username: string;
+  password: string;
 }
 
 type Sorting = {
