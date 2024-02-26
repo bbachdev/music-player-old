@@ -3,13 +3,17 @@ import { exists, readTextFile, writeTextFile, BaseDirectory } from '@tauri-apps/
 const CONFIG_FILE_NAME = 'config.json';
 
 export type Config = {
-  libraryPaths: string[];
+  libraryPaths: string|SubsonicEntity[];
   theme: "light" | "dark"
   accentColor: string; //TODO Potentially restrict to a list of colors
   discordRichPresenceEnabled: boolean;
   lyricDownloadsEnabled: boolean;
   homeSort: Sorting; //Default sorting for the home screen
   artistSort: Sorting; //Sorting when the user selects an artist
+}
+
+export type SubsonicEntity = {
+
 }
 
 type Sorting = {
